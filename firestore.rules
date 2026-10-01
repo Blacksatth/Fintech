@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper de rol (solo aplica a accesos directos del cliente; el Admin SDK los ignora).
+    function isAdmin() {
+      return request.auth != null && request.auth.token.role == 'ADMIN';
+    }
+
+    // Configuracion de producto: lectura publica (landing sin credenciales).
+    // Datos no sensibles. Escritura siempre desde el Admin SDK (API).
+    match /credit_products/{p} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /product_tiers/{p} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /payment_channels/{p} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /interest_rates/{p} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Auditoria: APPEND-ONLY. Sin escritura directa, sin update/delete.
+    // Lectura por el cliente denegada; la UI admin lee via API.
+    match /audit_logs/{id} {
+      allow create, update, delete, read: if false;
+    }
+
+    // Todo lo demas (users, profiles, applications, loans, installments,
+    // payments, disbursements, notifications, etc.): acceso directo del
+    // cliente DENEGADO. El Admin SDK (servidor) es el unico que muta.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/*
+ * Tokens de diseño — Microcredito MVP.
+ * El sistema de préstamos trabaja con pesos enteros COP; la UI refleja esa misma disciplina:
+ * primario "crédito" en teal profundo, neutros zinc templados, semánticos de estado, y una escala
+ * de spacing/radio/sombra coherente. Nada de valores inventados ni hechos al azar.
+ */
+
+@theme {
+  /* Color primario de marca: crédito/confianza (teal profundo) */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+
+  /* Neutros templados */
+  --color-surface: #ffffff;
+  --color-surface-muted: #fafaf9;
+  --color-ink: #1c1917;
+  --color-ink-muted: #57534e;
+  --color-ink-subtle: #78716c;
+  --color-border: #e7e5e4;
+  --color-border-strong: #d6d3d1;
+
+  /* Semánticos de estado */
+  --color-success: #15803d;
+  --color-success-bg: #f0fdf4;
+  --color-warning: #b45309;
+  --color-warning-bg: #fffbeb;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+  --color-info: #0369a1;
+  --color-info-bg: #f0f9ff;
+
+  /* Tipografía */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Radios */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Sombras (sutiles, sin capas apiladas) */
+  --shadow-card: 0 1px 2px 0 rgb(28 25 23 / 0.05);
+  --shadow-popover: 0 4px 12px -2px rgb(28 25 23 / 0.12);
+}
+
+/* Base */
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-surface-muted);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Foco visible en TODA interacción, en cualquier tema */
+:focus-visible {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--color-primary-100);
+  color: var(--color-primary-900);
+}
